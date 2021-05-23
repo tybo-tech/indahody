@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SKIN_TYPES } from '../utils/constants';
+import { PRODUCTS, SKIN_TYPES } from '../utils/constants';
+import { ProductService } from '../utils/product.service';
 
 @Component({
   selector: 'app-home',
@@ -30,7 +31,12 @@ Your skin can be dry or normal in some areas
       `,
     Icon: 'assets/images/comp.png'
   }
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private productService: ProductService
+  ) {
+
+    this.productService.updatProductsState(PRODUCTS);
 
   }
 
@@ -39,7 +45,7 @@ Your skin can be dry or normal in some areas
     this.interval = setInterval(() => {
       this.doSlide();
     }, 7000);
-    this.skinTypes = this.skinTypes.filter(x=>!x.Hided)
+    this.skinTypes = this.skinTypes.filter(x => !x.Hided)
   }
   changeSlide(i: number) {
 

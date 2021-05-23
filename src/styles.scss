@@ -170,13 +170,13 @@ textarea {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: rgba(88, 88, 88, 0.438);
+  background: rgb(82 82 82 / 95%);
   z-index: 100000;
   top: 0;
   left: 0;
 
   .body {
-    max-width: 20em;
+    max-width: 25em;
     margin: 7em auto;
     background: #fff;
     padding: 1em;
@@ -190,8 +190,8 @@ textarea {
     button {
       margin: 1em 0;
       padding: 1em;
-      background: #D6B498;
-      color: #000;
+      // background: #D6B498;
+      // color: #000;
       font-weight: 600;
       cursor: pointer;
     }
@@ -241,14 +241,16 @@ button {
   top: 40%;
   left: 0;
   display: grid;
-  grid-template-columns: 50% auto;
+  grid-template-columns:82% auto;
   span{
     display: block;
-    padding: .2em 1em;
+    padding: .2em;
+    padding-left: .4em;
     cursor: pointer;
-    &:last-child{
-      text-align: right;
-    }
+    border-radius: 1em;
+    background: rgba(0, 0, 0, 0.685);
+    color: #fff;
+    text-align:  center !important;
   }
 }
 

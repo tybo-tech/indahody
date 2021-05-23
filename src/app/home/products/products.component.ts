@@ -1,24 +1,35 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { ORDER, PRODUCTS } from 'src/app/utils/constants';
 import { Order, Product } from 'src/app/utils/email.model';
+import { ProductService } from 'src/app/utils/product.service';
 import { UxService } from 'src/app/utils/ux.service';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: ['./products.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class ProductsComponent implements OnInit {
   @Input() category: string;
   order: Order;
-  products = PRODUCTS;
+  products;
   showProduct: boolean;
-  constructor(private uxService: UxService, private router: Router) { }
+  selectedProduct: Product;
+  constructor(
+    private uxService: UxService,
+    private router: Router,
+    private productService: ProductService
+    ) {
+    this.productService.productObservable.subscribe(data => {
+      this.products = data || [];
+    })
+  }
 
   ngOnInit() {
-    this.showProduct = true;
+    this.selectedProduct = this.products[0];
     if (this.category) {
       this.products = this.products.filter(x => x.Category.toLocaleLowerCase().includes(this.category.toLocaleLowerCase()));
     }
@@ -63,9 +74,14 @@ export class ProductsComponent implements OnInit {
     }
 
   }
-  changeSlide(i: number){}
-  view(product: Product){
+  changeSlide(product: Product) {
+    const temp = product.Icon;
+    product.Icon = product.Icon2;
+    product.Icon2 = temp;
+  }
+  view(product: Product) {
     this.showProduct = true;
+    this.selectedProduct = product;
   }
 }
 

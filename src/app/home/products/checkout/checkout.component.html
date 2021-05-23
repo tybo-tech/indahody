@@ -51,8 +51,12 @@
 
   <div class="form" *ngIf="order && order.Products.length">
     <div class="form-item">
-      <label for="name">Your Name *</label>
+      <label for="name">First Name *</label>
       <input type="text" [(ngModel)]="name" placeholder="">
+    </div>
+    <div class="form-item">
+      <label for="name">Last Name *</label>
+      <input type="text" [(ngModel)]="surname" placeholder="">
     </div>
 
     <div class="form-item">
@@ -113,8 +117,44 @@
     </p>
 
 
-    <button class="secondary" type="button" (click)="back()">
-      Ok
-    </button>
+    <h3>
+      How would you like to pay?
+    </h3>
+
+  
+
+
+    <div class="payfast-form">
+      <form ngNoForm action="https://www.payfast.co.za/eng/process" method="POST">
+        <span *ngIf="name">
+          <input type="hidden" name="merchant_id" [value]="merchantId">
+          <input type="hidden" name="merchant_key" [value]="merchantKey">
+          <input type="hidden" name="return_url" [value]="shopingSuccesfulUrl">
+          <input type="hidden" name="cancel_url" [value]="paymentCancelledUrl">
+          <input type="hidden" name="notify_url" [value]="paymentCallbackUrl">
+    
+          <input type="hidden" name="name_first" [value]="name">
+          <input type="hidden" name="name_last" [value]="surname">
+          <input type="hidden" name="email_address" [value]="email">
+          <input type="hidden" name="cell_number" [value]="phone">
+    
+    
+          <input type="hidden" name="amount" [value]="order.Total">
+          <input type="hidden" name="item_name" [value]="productDescription">
+          <input type="hidden" name="item_description" [value]="productDescription">
+    
+    
+          <input type="hidden" name="email_confirmation" value="1">
+          <input type="hidden" name="confirmation_address" value="payments@tybo.co.za">
+        </span>
+    
+        <div class="actions">
+          <button type="submit"  class="primary">Pay online now</button>
+          <button class="secondary" type="button" (click)="back()">
+            Pay using EFT
+           </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

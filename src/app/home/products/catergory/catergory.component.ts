@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ORDER, PRODUCTS, SKIN_TYPES } from 'src/app/utils/constants';
 import { Order, Product } from 'src/app/utils/email.model';
+import { ProductService } from 'src/app/utils/product.service';
 import { UxService } from 'src/app/utils/ux.service';
 
 @Component({
@@ -15,9 +16,20 @@ export class CatergoryComponent implements OnInit {
   id: any;
   item: any;
   order: Order;
-  constructor(private activatedRoute: ActivatedRoute, private uxService: UxService, private router: Router) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private uxService: UxService,
+    private router: Router,
+    private productService: ProductService
+  ) {
     this.activatedRoute.params.subscribe(r => {
       this.id = r.id;
+      if (this.id) {
+        this.products = this.products.filter(x => x.Category.toLocaleLowerCase().includes(this.id.toLocaleLowerCase())
+          || x.Category.toLocaleLowerCase().includes('all skin types'));
+
+        this.productService.updatProductsState(this.products);
+      }
     });
   }
 
@@ -26,11 +38,8 @@ export class CatergoryComponent implements OnInit {
       this.item = this.skinTypes.find(x => x.Id === this.id)
     }
 
-    if (this.id) {
-      this.products = this.products.filter(x => x.Category.toLocaleLowerCase().includes(this.id.toLocaleLowerCase())
-        || x.Category.toLocaleLowerCase().includes('all skin types'));
-    }
-    
+
+
   }
 
   addToCart(item: Product) {

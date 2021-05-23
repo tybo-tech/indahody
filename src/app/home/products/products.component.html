@@ -15,13 +15,13 @@
       <h4>
         {{item.Price | currency: 'R '}}
       </h4>
-
+<!-- 
       <p>
         {{item.Description}}
-      </p>
+      </p> -->
       <br>
-      <label for="">Qty:</label>
-      <input type="number"  [(ngModel)]="item.Quantity" name="" id="">
+      <!-- <label for="">Qty:</label>
+      <input type="number"  [(ngModel)]="item.Quantity" name="" id=""> -->
       <button class="primary" type="button" [disabled] ="item.Quantity < 1" (click)="view(item)">
        View product
       </button>
@@ -34,3 +34,44 @@
 
 </div>
 
+<div class="show-product" *ngIf="showProduct && selectedProduct">
+  <div class="product">
+
+    <div class="service"  (click)="goto(selectedProduct)">
+      <div class="image">
+        <h3 (click)="showProduct = false" class="back">
+          Back
+        </h3>
+        <img [src]="selectedProduct.Icon" alt="">
+        <div class="scrolls" *ngIf="selectedProduct.Icon2">
+          <span class="material-icons" (click)="changeSlide(selectedProduct)">
+            arrow_back_ios
+            </span>
+            <span class="material-icons" (click)="changeSlide(selectedProduct)">
+              arrow_forward_ios
+              </span>
+        </div>
+      </div>
+     
+      <div class="data">
+        <h4>
+          {{selectedProduct.Name}}
+        </h4>
+        <h4>
+          {{selectedProduct.Price | currency: 'R '}}
+        </h4>
+        <br>
+        <div [innerHTML] = "selectedProduct.Description">
+        </div>
+        <br>
+        <label for="">Qty:</label>
+        <input type="number"  [(ngModel)]="selectedProduct.Quantity" name="" id="">
+        <button class="primary" type="button" [disabled] ="selectedProduct.Quantity < 1" (click)="addToCart(selectedProduct)">
+          Add To Cart
+        </button>
+      </div>
+
+     
+    </div>
+  </div>
+</div>

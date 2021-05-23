@@ -9,35 +9,11 @@
   <p>
     {{item.Description}}
   </p>
-  <h1 class="main-heading">
-    Products for {{item.Name}}
-  </h1>
+  <h3 class="main-heading">
+    Products for {{item.Name}} (  {{products.length}})
+  </h3>
 
+  <app-products></app-products>
 
-
-  <div class="skin-types">
-    <div class="service" *ngFor="let item of products">
-      <div class="image">
-        <img [src]="item.Icon" alt="">
-      </div>
-      <h4>
-        {{item.Name}}
-      </h4>
-      <h4>
-        {{item.Price | currency: 'R '}}
-      </h4>
-
-      <p>
-        {{item.Description}}
-      </p>
-      <br>
-      <label for="">Qty:</label>
-      <input type="number"  [(ngModel)]="item.Quantity" name="" id="">
-      <button class="primary" type="button" [disabled] ="item.Quantity < 1" (click)="addToCart(item)">
-        Add to cart
-      </button>
-    </div>
-
-  </div>
 
 </div>
